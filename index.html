@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>map created with amCharts | amCharts</title>
+		<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+	  
+		<!-- Custom styles for this template-->
+		<link href="css/sb-admin-2.min.css" rel="stylesheet">
+	  
+		<!-- validation engine -->
+		<link rel="stylesheet" href="vendor/validation-engine/css/validationEngine.jquery.css" type="text/css"/>
+
+		<link href="css/estilos.css" rel="stylesheet">
+		
+		
+	</head>
+
+	<body id="page-top">
+		<div id="wrapper">
+		  <div id="content-wrapper" class="d-flex flex-column">
+			<div id="content">
+	  
+			  <!-- Topbar -->
+				
+			  
+			  <!-- End of Topbar -->
+	  
+			  <!-- Begin Page Content -->
+			  <div class="container-fluid">
+	  
+				<!-- Page Heading -->
+				<div class="d-sm-flex align-items-center justify-content-between mb-4" style="padding: 15px; background-color: #37bbed;">
+					<img src="https://www.argentina.gob.ar/profiles/argentinagobar/themes/argentinagobar/argentinagobar_theme/logo_argentina-blanco.svg" alt="Argentina.gob.ar" width="254" height="50">
+				</div>
+	  
+		
+				<!-- Content Row -->
+				<div class="row">
+					<div id="map" class="col-md-4" style="height: 500px;"></div>
+					
+	  
+								  <!-- Pie Chart -->
+				  <div class="col-md-8">
+					<div class="card shadow mb-8">
+					  <!-- Card Header - Dropdown -->
+					  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+						<h3 class="m-0 font-weight-bold text-primary-gobar">Info</h3>
+					  </div>
+					  <!-- Card Body -->
+					  <div id="info" class="card-body">
+							<p>Este proyecto se genero para probar de manera rápida la librería  amCharts</p>
+                            <p>Seleccione una provincia del mapa Argentino para ver información de la misma</p>
+
+					  </div>
+					</div>
+				  </div>
+			 
+				</div>
+	
+				</div>
+			  <!-- /.container-fluid -->
+	  
+				</div>
+			<!-- End of Main Content -->
+	  
+			  </div>
+	  
+			</div>
+			<script type="text/javascript" src="https://www.amcharts.com/lib/3/ammap.js"></script>
+			<script type="text/javascript" src="js/argentinaLow.js"></script>
+			<script type="text/javascript" src="js/descMap.js"></script>
+			<!-- amCharts javascript code -->
+			<script type="text/javascript">
+				AmCharts.makeChart("map",{
+						"type": "map",
+						"pathToImages": "http://www.amcharts.com/lib/3/images/",
+						"addClassNames": true,
+						"fontSize": 15,
+						"color": "#FFFFFF",
+						"projection": "mercator",
+						"backgroundAlpha": 1,
+						"backgroundColor": "#ffffff",
+						"autoResize": false,
+						"dataProvider": {
+							"map": "argentinaLow",
+							"getAreasFromMap": true,
+							
+						},
+						"balloon": {
+							"horizontalPadding": 15,
+							"borderAlpha": 0,
+							"borderThickness": 1,
+							"verticalPadding": 15
+						},
+						"areasSettings": {
+							"color": "#37bbed",
+							"outlineColor": "rgba(80,80,80,1)",
+							"rollOverOutlineColor": "#37bbed",
+							"rollOverBrightness": 20,
+							"selectedBrightness": 20,
+							"selectable": true,
+							"unlistedAreasAlpha": 0,
+							"unlistedAreasOutlineAlpha": 0
+						},
+						"imagesSettings": {
+							"alpha": 1,
+							"color": "rgba(129,129,129,1)",
+							"outlineAlpha": 0,
+							"rollOverOutlineAlpha": 0,
+							"outlineColor": "rgba(80,80,80,1)",
+							"rollOverBrightness": 20,
+							"selectedBrightness": 20,
+							"selectable": true
+						},
+						"linesSettings": {
+							"color": "rgba(129,129,129,1)",
+							"selectable": true,
+							"rollOverBrightness": 20,
+							"selectedBrightness": 20
+						},
+						"zoomControl": {
+							"zoomControlEnabled": false,
+							"homeButtonEnabled": false,
+							"panControlEnabled": false,
+							"right": 38,
+							"bottom": 30,
+							"minZoomLevel": 0.25,
+							"gridHeight": 100,
+							"gridAlpha": 0.1,
+							"gridBackgroundAlpha": 0,
+							"gridColor": "#FFFFFF",
+							"draggerAlpha": 1,
+							"buttonCornerRadius": 2
+						},
+						"clickMapObject" :function(a,b){
+							var c=this;b&&(b.touches||isNaN(a.zoomLevel)&&isNaN(a.zoomX)&&isNaN(a.zoomY)||c.hideBalloon());if(c.chartCreated&&!c.preventHover&&c.checkTouchDuration(b)&&!c.mapWasDragged&&c.checkIfClickable(a)&&!c.mapWasPinched){c.selectObject(a);var d=c.zoomLevel(),g=c.mapSet.getBBox(),d=c.xyToCoordinates((c.mouseX-c.mapContainer.x)/d-g.x*c.mapScale,(c.mouseY-c.mapContainer.y)/d-g.y*c.mapScale);c.clickLatitude=d.latitude;c.clickLongitude=d.longitude;b&&b.touches&&setTimeout(function(){c.showBalloonAfterZoom.call(c)},1E3*c.zoomDuration);c.fire({type:"clickMapObject",mapObject:a,chart:c,event:b});c.objectWasClicked=!0}
+							console.log(a);
+							console.log(b);
+							document.getElementById("info").innerHTML="";
+							document.getElementById("info").innerHTML=descripciones[a.id];
+
+											}
+					});
+			</script>
+	  </body>
+
+	  
+</html>
